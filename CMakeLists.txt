@@ -1,6 +1,6 @@
 # ZiMMT Binaural Decoder CMakeLists.txt
 
-cmake_minimum_required(VERSION 3.15)
+cmake_minimum_required(VERSION 3.22)
 
 project(ZiMMTBinauralDecoder VERSION 1.0.0)
 
@@ -30,7 +30,10 @@ juce_generate_juce_header(ZiMMTBinauralDecoder)
 target_sources(ZiMMTBinauralDecoder
     PRIVATE
         PluginEditor.cpp
-        PluginProcessor.cpp)
+        PluginProcessor.cpp
+        DomeView.cpp)
+
+target_compile_features(ZiMMTBinauralDecoder PRIVATE cxx_std_17)
 
 target_compile_definitions(ZiMMTBinauralDecoder
     PUBLIC
@@ -71,12 +74,10 @@ juce_add_binary_data(BinaryData SOURCES
         assets/brirs/zimmt_brir_lspk30.wav
         assets/brirs/zimmt_brir_lspk31.wav
         assets/brirs/zimmt_brir_lspk32.wav
-        assets/zimmt_bypassWindow.svg
-        assets/zimmt_decodeWindow.svg
-        assets/zimmt_buttonOn.svg
-        assets/zimmt_buttonOff.svg
-        assets/zimmt_buttonOn_hover.svg
-        assets/zimmt_buttonOff_hover.svg
+        assets/fonts/InterTight-Regular.ttf
+        assets/fonts/InterTight-Medium.ttf
+        assets/fonts/InterTight-SemiBold.ttf
+        assets/fonts/InterTight-Bold.ttf
 )
 
 target_link_libraries(ZiMMTBinauralDecoder

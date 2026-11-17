@@ -29,6 +29,8 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
+        with:
+          submodules: recursive
 
       - name: Install Dependencies (Linux only)
         if: matrix.os == 'ubuntu-latest'
@@ -41,7 +43,10 @@ jobs:
             libxrandr-dev \
             libxinerama-dev \
             libxcursor-dev \
-            libfreetype6-dev \
+            libxcomposite-dev \
+            libxrender-dev \
+            libfreetype-dev \
+            libfontconfig1-dev \
             libxext-dev \
             libgl1-mesa-dev \
             libasound2-dev
