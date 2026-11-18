@@ -1,8 +1,8 @@
-# ZiMMT Binaural Decoder CMakeLists.txt
+# ZiMMT Binaural Monitor CMakeLists.txt
 
 cmake_minimum_required(VERSION 3.22)
 
-project(ZiMMTBinauralDecoder VERSION 1.0.0)
+project(ZiMMTBinauralMonitor VERSION 1.0.0)
 
 if(UNIX AND NOT APPLE)
     set(CMAKE_POSITION_INDEPENDENT_CODE ON)
@@ -10,7 +10,7 @@ endif()
 
 add_subdirectory(JUCE)                  
 
-juce_add_plugin(ZiMMTBinauralDecoder
+juce_add_plugin(ZiMMTBinauralMonitor
     VERSION 1.0.0
     COMPANY_NAME "ZiMMT"
     IS_SYNTH FALSE
@@ -20,22 +20,22 @@ juce_add_plugin(ZiMMTBinauralDecoder
     EDITOR_WANTS_KEYBOARD_FOCUS FALSE
     COPY_PLUGIN_AFTER_BUILD TRUE
     PLUGIN_MANUFACTURER_CODE ZiMM
-    PLUGIN_CODE ZiBD
+    PLUGIN_CODE ZiBM
     FORMATS VST3 Standalone
-    PRODUCT_NAME "ZiMMTBinauralDecoder"
-    PLUGIN_NAME "ZiMMT Binaural Decoder")
+    PRODUCT_NAME "ZiMMTBinauralMonitor"
+    PLUGIN_NAME "ZiMMT Binaural Monitor")
 
-juce_generate_juce_header(ZiMMTBinauralDecoder)
+juce_generate_juce_header(ZiMMTBinauralMonitor)
 
-target_sources(ZiMMTBinauralDecoder
+target_sources(ZiMMTBinauralMonitor
     PRIVATE
         PluginEditor.cpp
         PluginProcessor.cpp
         DomeView.cpp)
 
-target_compile_features(ZiMMTBinauralDecoder PRIVATE cxx_std_17)
+target_compile_features(ZiMMTBinauralMonitor PRIVATE cxx_std_17)
 
-target_compile_definitions(ZiMMTBinauralDecoder
+target_compile_definitions(ZiMMTBinauralMonitor
     PUBLIC
         JUCE_WEB_BROWSER=0
         JUCE_USE_CURL=0
@@ -80,7 +80,7 @@ juce_add_binary_data(BinaryData SOURCES
         assets/fonts/InterTight-Bold.ttf
 )
 
-target_link_libraries(ZiMMTBinauralDecoder
+target_link_libraries(ZiMMTBinauralMonitor
     PRIVATE
         BinaryData
         juce::juce_audio_utils

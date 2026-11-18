@@ -1,6 +1,6 @@
-# ZiMMT Binaural Decoder
+# ZiMMT Binaural Monitor
 
-A real-time binaural decoder for the 32-channel hemispherical loudspeaker array of the Center for Immersive Media Art, Music and Technology (ZiMMT) in Leipzig. The plugin performs partitioned convolution using measured BRIRs from a dummy head equipped with DPA microphones, enabling binaural monitoring of spatial audio productions.
+A real-time binaural monitor for the 32-channel hemispherical loudspeaker array of the Center for Immersive Media Art, Music and Technology (ZiMMT) in Leipzig. The plugin performs partitioned convolution using measured BRIRs from a dummy head equipped with DPA microphones, enabling binaural monitoring of spatial audio productions.
 
 <p align="center">
   <img src="docs/images/binaural.png" alt="Binaural mode" width="380">
@@ -9,7 +9,7 @@ A real-time binaural decoder for the 32-channel hemispherical loudspeaker array 
 
 ## Download
 
-Pre-built binaries for Windows, macOS, and Linux are available on the [Releases page](https://github.com/ZiMMT-Lab/ZiMMTBinauralDecoder/releases).
+Pre-built binaries for Windows, macOS, and Linux are available on the [Releases page](https://github.com/ZiMMT-Lab/ZiMMTBinauralMonitor/releases).
 
 ## Build Instructions
 
@@ -20,16 +20,16 @@ Pre-built binaries for Windows, macOS, and Linux are available on the [Releases 
 
 ### Building from Source
 ```bash
-git clone --recursive https://github.com/ZiMMT-Lab/ZiMMTBinauralDecoder.git
-cd ZiMMTBinauralDecoder
+git clone --recursive https://github.com/ZiMMT-Lab/ZiMMTBinauralMonitor.git
+cd ZiMMTBinauralMonitor
 git submodule update --init --recursive  
 cmake -B build -DCMAKE_BUILD_TYPE=Release
 cmake --build build --config Release
 ```
 
 Built plugins will be located in:
-- **VST3**: `build/ZiMMTBinauralDecoder_artefacts/Release/VST3/`
-- **Standalone**: `build/ZiMMTBinauralDecoder_artefacts/Release/Standalone/`
+- **VST3**: `build/ZiMMTBinauralMonitor_artefacts/Release/VST3/`
+- **Standalone**: `build/ZiMMTBinauralMonitor_artefacts/Release/Standalone/`
 
 ## License
 

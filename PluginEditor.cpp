@@ -601,7 +601,7 @@ void AudioPluginAudioProcessorEditor::paint (juce::Graphics& g)
     Fonts::draw (g, wordmark, "ZiMMT", layout::pad, mid);
 
     g.setColour (theme.mu);
-    Fonts::draw (g, fonts.regular (12.0f), "binaural decoder",
+    Fonts::draw (g, fonts.regular (12.0f), "binaural monitor",
                  layout::pad + Fonts::width (wordmark, "ZiMMT") + 10.0f, mid);
 }
 

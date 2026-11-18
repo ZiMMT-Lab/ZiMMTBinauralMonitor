@@ -18,7 +18,7 @@ jobs:
             os: macos-14
             arch: arm64
           - name: macOS-x86_64
-            os: macos-13
+            os: macos-14
             arch: x86_64
           - name: Windows-x86_64
             os: windows-latest
@@ -118,37 +118,37 @@ jobs:
           echo "Using identity: $IDENTITY"
           
           # Sign VST3 bundle
-          if [ -d "build/ZiMMTBinauralDecoder_artefacts/Release/VST3/ZiMMTBinauralDecoder.vst3" ]; then
+          if [ -d "build/ZiMMTBinauralMonitor_artefacts/Release/VST3/ZiMMTBinauralMonitor.vst3" ]; then
             echo "Signing VST3 bundle..."
             codesign --force --deep --strict --timestamp \
               --sign "$IDENTITY" \
               --options runtime \
-              "build/ZiMMTBinauralDecoder_artefacts/Release/VST3/ZiMMTBinauralDecoder.vst3"
+              "build/ZiMMTBinauralMonitor_artefacts/Release/VST3/ZiMMTBinauralMonitor.vst3"
             
             # Verify VST3 signature
-            codesign --verify --deep --strict --verbose=2 "build/ZiMMTBinauralDecoder_artefacts/Release/VST3/ZiMMTBinauralDecoder.vst3"
+            codesign --verify --deep --strict --verbose=2 "build/ZiMMTBinauralMonitor_artefacts/Release/VST3/ZiMMTBinauralMonitor.vst3"
           fi
           
           # Sign Standalone app
-          if [ -d "build/ZiMMTBinauralDecoder_artefacts/Release/Standalone/ZiMMTBinauralDecoder.app" ]; then
+          if [ -d "build/ZiMMTBinauralMonitor_artefacts/Release/Standalone/ZiMMTBinauralMonitor.app" ]; then
             echo "Signing Standalone app..."
             codesign --force --deep --strict --timestamp \
               --sign "$IDENTITY" \
               --options runtime \
-              "build/ZiMMTBinauralDecoder_artefacts/Release/Standalone/ZiMMTBinauralDecoder.app"
+              "build/ZiMMTBinauralMonitor_artefacts/Release/Standalone/ZiMMTBinauralMonitor.app"
             
             # Verify Standalone signature
-            codesign --verify --deep --strict --verbose=2 "build/ZiMMTBinauralDecoder_artefacts/Release/Standalone/ZiMMTBinauralDecoder.app"
+            codesign --verify --deep --strict --verbose=2 "build/ZiMMTBinauralMonitor_artefacts/Release/Standalone/ZiMMTBinauralMonitor.app"
           fi
           
           # Create a zip for notarization
-          cd build/ZiMMTBinauralDecoder_artefacts/Release
-          zip -r "../../../ZiMMTDecoder-${{ matrix.name }}-signed.zip" VST3 Standalone
+          cd build/ZiMMTBinauralMonitor_artefacts/Release
+          zip -r "../../../ZiMMTMonitor-${{ matrix.name }}-signed.zip" VST3 Standalone
           cd ../../..
           
           # Submit for notarization
           echo "Submitting for notarization..."
-          xcrun notarytool submit "ZiMMTDecoder-${{ matrix.name }}-signed.zip" \
+          xcrun notarytool submit "ZiMMTMonitor-${{ matrix.name }}-signed.zip" \
             --issuer "$ASC_ISSUER_ID" \
             --key-id "$ASC_KEY_ID" \
             --key "~/.appstoreconnect/private_keys/AuthKey_$ASC_KEY_ID.p8" \
@@ -156,30 +156,30 @@ jobs:
             --timeout 30m
           
           # Staple the notarization ticket (for .app bundles only)
-          if [ -d "build/ZiMMTBinauralDecoder_artefacts/Release/Standalone/ZiMMTBinauralDecoder.app" ]; then
+          if [ -d "build/ZiMMTBinauralMonitor_artefacts/Release/Standalone/ZiMMTBinauralMonitor.app" ]; then
             echo "Stapling notarization ticket to Standalone app..."
-            xcrun stapler staple "build/ZiMMTBinauralDecoder_artefacts/Release/Standalone/ZiMMTBinauralDecoder.app"
+            xcrun stapler staple "build/ZiMMTBinauralMonitor_artefacts/Release/Standalone/ZiMMTBinauralMonitor.app"
           fi
           
           # Note: VST3 bundles cannot be stapled, but they will be recognized as notarized
           
           # Re-zip with stapled items
-          cd build/ZiMMTBinauralDecoder_artefacts/Release
-          zip -r "../../../ZiMMTDecoder-${{ matrix.name }}.zip" VST3 Standalone
+          cd build/ZiMMTBinauralMonitor_artefacts/Release
+          zip -r "../../../ZiMMTMonitor-${{ matrix.name }}.zip" VST3 Standalone
           cd ../../..
           
           echo "Signing and notarization complete!"
 
       - name: Show full output tree (Windows)
         if: runner.os == 'Windows'
-        run: tree build\ZiMMTBinauralDecoder_artefacts /F
+        run: tree build\ZiMMTBinauralMonitor_artefacts /F
         shell: cmd
 
       - name: Create artifact (Windows)
         if: runner.os == 'Windows'
         run: |
-          $src = "build/ZiMMTBinauralDecoder_artefacts/Release"
-          $zipName = "ZiMMTDecoder-${{ matrix.name }}.zip"
+          $src = "build/ZiMMTBinauralMonitor_artefacts/Release"
+          $zipName = "ZiMMTMonitor-${{ matrix.name }}.zip"
           Compress-Archive -Path "$src/VST3", "$src/Standalone" -DestinationPath $zipName
           echo "Created: $zipName"
         shell: pwsh
@@ -187,8 +187,8 @@ jobs:
       - name: Create artifact (Linux)
         if: runner.os == 'Linux'
         run: |
-          cd build/ZiMMTBinauralDecoder_artefacts/Release
-          zipName="ZiMMTDecoder-${{ matrix.name }}.zip"
+          cd build/ZiMMTBinauralMonitor_artefacts/Release
+          zipName="ZiMMTMonitor-${{ matrix.name }}.zip"
           zip -r "../../../$zipName" VST3 Standalone || echo "Nothing to zip"
           echo "Created: $zipName"
         shell: bash
@@ -204,8 +204,8 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
-          name: ZiMMTDecoder-${{ matrix.name }}
-          path: ZiMMTDecoder-${{ matrix.name }}.zip
+          name: ZiMMTMonitor-${{ matrix.name }}
+          path: ZiMMTMonitor-${{ matrix.name }}.zip
 
   release:
     name: Create GitHub Release

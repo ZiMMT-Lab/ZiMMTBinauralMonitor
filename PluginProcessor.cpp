@@ -310,7 +310,7 @@ juce::AudioProcessorEditor* AudioPluginAudioProcessor::createEditor()
 //==============================================================================
 void AudioPluginAudioProcessor::getStateInformation (juce::MemoryBlock& destData)
 {
-    juce::XmlElement xml ("ZiMMTBinauralDecoder");
+    juce::XmlElement xml ("ZiMMTBinauralMonitor");
     xml.setAttribute ("mode", currentMode.load());
     xml.setAttribute ("levelDb", (double) levelDb.load());
     xml.setAttribute ("mutes", juce::String ((juce::int64) muteMask.load()));
@@ -322,7 +322,7 @@ void AudioPluginAudioProcessor::setStateInformation (const void* data, int sizeI
 {
     const auto xml = getXmlFromBinary (data, sizeInBytes);
 
-    if (xml == nullptr || ! xml->hasTagName ("ZiMMTBinauralDecoder"))
+    if (xml == nullptr || ! xml->hasTagName ("ZiMMTBinauralMonitor"))
         return;
 
     currentMode.store (xml->getIntAttribute ("mode", 0) == 1 ? 1 : 0);
